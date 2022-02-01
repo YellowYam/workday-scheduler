@@ -1,17 +1,19 @@
+//Mem. Check for day change, and clear timeblock data on new days.
+//Mem. Capture screenshot when color scheme can be seen.
 
-var currentDay = $('#currentDay');
+var currentDay = $('#currentDay');  // References the jumbotron date display
 
-var today = moment().format('dddd, MMMM Do');
+var today = moment().format('dddd, MMMM Do'); //Calls Moment.js to calculate the day for the display
 
-var container = $('.container');
+var container = $('.container');  //References the skeleton container that came with the assignment
 
-$( function() {
+$( function() {         // Begins the ready function
     //Set day for jumbotron
     $(currentDay).text(today);
 
     //Render timeblock input background colors
     function renderTimeblockColors() {
-        var hour = moment().hour();
+        var hour = moment().hour();  
 
         for(let i = 0; i < $(container).children().length; i++){  //For each timeblock
             if(hour > $(container).children().eq(i).index() + 9){    // Compare the moment.js hour to the 
@@ -35,7 +37,7 @@ $( function() {
     //Get timeblock info from local storage
     function getTimeblockInfo(){
 
-        var timeBlockInfo = ['','','','','','','','',''];
+        var timeBlockInfo = ['','','','','','','','','']; //An array for each of the 9 workday hours
 
         if(JSON.parse(localStorage.getItem('timeBlockInfo')) == null){
             return timeBlockInfo;
@@ -49,11 +51,11 @@ $( function() {
     //Render timeblock info to timeblocks
     function renderTimeblockInfo(){
 
-        var timeBlockInfo = getTimeblockInfo();
+        var timeBlockInfo = getTimeblockInfo(); //Get timeblock info from storage
 
 
         for(let i = 0; i < $(container).children().length; i++){  //For each timeblock
-            $(container).children().eq(i).find('textarea').val(timeBlockInfo[i]);
+            $(container).children().eq(i).find('textarea').val(timeBlockInfo[i]); //Print the value from storage
         }
     }
 
@@ -77,5 +79,5 @@ $( function() {
     renderTimeblockColors();
     renderTimeblockInfo();
 
-    $(container).on('click', '.btn', saveTimeblockInfo)
+    $(container).on('click', '.btn', saveTimeblockInfo) //Add event listener to the save buttons
 });
